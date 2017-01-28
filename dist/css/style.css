@@ -35,7 +35,7 @@ html, body {
         #container #player .player-cover .lyric-ct .lyriclist {
           position: absolute;
           width: 100%;
-          height: 100%;
+          height: 80%;
           z-index: 99;
           top: 30px; }
           #container #player .player-cover .lyric-ct .lyriclist li {
@@ -90,6 +90,7 @@ html, body {
         #container #player .player-ctrl .song-info .song-ct {
           line-height: 1.8; }
           #container #player .player-ctrl .song-info .song-ct .s-name {
+            margin: 0 2rem;
             font-size: 2rem; }
           #container #player .player-ctrl .song-info .song-ct .s-singer {
             color: #808080;
@@ -110,7 +111,7 @@ html, body {
           #container #player .player-ctrl .progress .progressbar .pointnow {
             position: absolute;
             top: -4px;
-            left: 100px;
+            left: 0;
             width: 16px;
             height: 16px;
             border-radius: 50%;
@@ -119,7 +120,7 @@ html, body {
             z-index: 99; }
           #container #player .player-ctrl .progress .progressbar .pasttime {
             position: absolute;
-            width: 108px;
+            width: 0;
             height: 8px;
             background: #E0443B;
             border-radius: 5px; }
@@ -152,7 +153,8 @@ html, body {
           position: absolute;
           font-size: 0.8rem;
           left: 1.5rem;
-          top: -1px; }
+          top: -1px;
+          color: #eee; }
         #container #playlist .playheader .search input {
           position: absolute;
           left: 1.5rem;

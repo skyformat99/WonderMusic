@@ -58,7 +58,7 @@ html,body {
         .lyriclist{
           position:absolute;
           width:100%;
-          height:100%;
+          height:80%;
           z-index:99;
           top:30px;
           li{
@@ -125,6 +125,7 @@ html,body {
         .song-ct{
           line-height:1.8;
           .s-name{
+            margin:0 2rem;
             font-size:2rem;
           }
           .s-singer{
@@ -153,7 +154,7 @@ html,body {
           .pointnow{
             position:absolute;
             top:-4px;
-            left:100px;
+            left:0;
             width:16px;
             height:16px;
             border-radius:50%;
@@ -163,7 +164,7 @@ html,body {
           }
           .pasttime{
             position:absolute;
-            width:108px;
+            width:0;
             height:8px;
             background:$prired;
             border-radius:5px;
@@ -207,6 +208,7 @@ html,body {
           font-size:0.8rem;
           left:1.5rem;
           top:-1px;
+          color:#eee;
         }
         input{
           position:absolute;
