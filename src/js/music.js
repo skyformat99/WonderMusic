@@ -8,7 +8,7 @@ GetMusic.prototype = {
     },
     bind:function(){
         var _this = this;
-        var playlistShow = false;
+        var playlistShow = true;
         var playRandom = false;
         this.player = document.querySelector('audio');
         this.player.ontimeupdate = function(){
