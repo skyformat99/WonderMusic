@@ -57,6 +57,9 @@ GetMusic.prototype = {
                 if(playRandom){
                     _this.playSong(_this.randomArray[_this.idx-1]);
                 }else{
+                    if(_this.player.paused){
+                        $('.play').html('<i class="fa fa-pause-circle fa-4x">');
+                    }
                     _this.playSong(_this.idx-1);
                 }
             }
@@ -65,6 +68,9 @@ GetMusic.prototype = {
             if(playRandom){
                 _this.playSong(_this.randomArray[_this.idx+1]);
             }else{
+                if(_this.player.paused){
+                    $('.play').html('<i class="fa fa-pause-circle fa-4x">');
+                }
                 _this.playSong(_this.idx+1);
             }
         });
@@ -207,6 +213,7 @@ GetMusic.prototype = {
             }
         }).done(function($result){
             _this.renderList($result.result.songs);
+            $('.songlist').scrollTop(0);
         });
     },
     playSong:function(idx){
