@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 
 var minhtml = require('gulp-htmlmin'),
-    mincss = require('gulp-minify-css'),
+    mincss = require('gulp-clean-css'),
     minimage = require('gulp-imagemin'),
     uglify = require('gulp-uglify'),
     autoprefixer = require('gulp-autoprefixer'),
@@ -28,8 +28,8 @@ gulp.task('sass', function(){
 });
 
 gulp.task('mincss',function(){
-    gulp.src('dist/css/*')
-        .pipe(mincss())
+    gulp.src('dist/css/style.css')
+        .pipe(mincss({compatibility: 'ie8'}))
         .pipe(gulp.dest('dist/css'))
 });
 

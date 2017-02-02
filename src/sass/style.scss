@@ -18,6 +18,7 @@ html,body {
   height: 100%;
   font-family:$fontStack;
   font-size:16px;
+  user-select:none;
 }
 #container{
   width:100%;
