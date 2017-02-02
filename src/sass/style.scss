@@ -1,30 +1,14 @@
-@import './_mq.scss';
-$mq-responsive: true;
-$mq-breakpoints: (
-        mobile:  320px,
-        tablet:  740px,
-        desktop: 980px,
-        wide:    1300px,
-        desktopAd: 810px,
-        mobileLandscape: 480px
-);
-$mq-static-breakpoint: desktop;
-$mq-show-breakpoints: (mobile, mobileLandscape, tablet, desktop, wide);
-
 $fontStack:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 $gray:#808080;
 $lightgray:#E5E2E2;
 $lightbrown:#4A473C;
 $prired:#E0443B;
 $orange:#F9774E;
-$green:#7ACC8D;
-$yellow:#FAC76F;
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-
 }
 ul,li{
   list-style: none;
@@ -45,7 +29,7 @@ html,body {
     height:100%;
     .player-cover{
       height:55%;
-      background-image:url('../img/2.jpg');
+      background-image:url('../img/blank.png');
       background-size:cover;
       background-repeat:no-repeat;
       position:relative;
@@ -55,20 +39,36 @@ html,body {
         height:100%;
         position:relative;
         background:rgba(0,0,0,0.3);
-        .lyriclist{
+        .lyric-cover-ct{
           position:absolute;
           width:100%;
-          height:80%;
-          z-index:99;
-          top:30px;
-          li{
-            height:30px;
-            line-height:30px;
-            text-align: center;
-            color:#777;
-          }
-          li.active{
-            color:#fff;
+          height:210px;
+          left:50%;
+          top:50%;
+          transform:translate(-50%,-50%);
+          overflow:hidden;
+          .lyric-cover{
+            width:100%;
+            height:100%;
+            position:relative;
+            .lyriclist{
+              position:absolute;
+              width:100%;
+              height:80%;
+              z-index:99;
+              top:0;
+              li{
+                height:30px;
+                line-height:30px;
+                text-align: center;
+                color:#555;
+                font-size:0.8rem;
+              }
+              li.active{
+                color:#fff;
+                font-size:0.9rem;
+              }
+            }
           }
         }
       }
@@ -126,9 +126,10 @@ html,body {
           line-height:1.8;
           .s-name{
             margin:0 2rem;
-            font-size:2rem;
+            font-size:1.8rem;
           }
           .s-singer{
+            font-size:0.9rem;
             color:$gray;
             font-weight:300;
           }
@@ -139,12 +140,8 @@ html,body {
         display:flex;
         align-items:center;
         justify-content:space-around;
-
-        .timenow{
-
-        }
         .progressbar{
-          margin:0 -20%;
+          margin:0 -15%;
           width:60%;
           height:8px;
           line-height:8px;
@@ -154,13 +151,14 @@ html,body {
           .pointnow{
             position:absolute;
             top:-4px;
-            left:0;
+            left:-8px;
             width:16px;
             height:16px;
             border-radius:50%;
             border:2px solid $prired;
             background:#fff;
             z-index:99;
+            cursor:pointer;
           }
           .pasttime{
             position:absolute;
@@ -169,9 +167,6 @@ html,body {
             background:$prired;
             border-radius:5px;
           }
-        }
-        .timetotal{
-
         }
       }
     }
@@ -188,8 +183,42 @@ html,body {
       justify-content: space-between;
       color:#fff;
       font-size:1.5rem;
-      i{
-        cursor:pointer;
+      .chanel{
+        position:relative;
+        i{
+          cursor:pointer;
+          &:hover{
+            color:$lightgray;
+          }
+        }
+        .chanellist{
+          position:absolute;
+          left:-2rem;
+          top:3rem;
+          width:200px;
+          overflow:hidden;
+          display:none;
+          z-index:99;
+          background:#fff;
+          box-shadow:1px 1px 5px #ccc;
+          li{
+            color:#333;
+            height:40px;
+            line-height:40px;
+            font-size:1rem;
+            border:1px solid #ccc;
+            border-top:none;
+            padding:0 1rem;
+            overflow:hidden;
+            background:#fff;
+            cursor:pointer;
+            z-index:99;
+
+            &:hover{
+              background:$lightgray;
+            }
+          }
+        }
       }
       .search{
         height:1.8rem;
@@ -237,7 +266,7 @@ html,body {
         overflow-x:hidden;
         overflow-y:scroll;
         &::-webkit-scrollbar{
-          width:5px;
+          width:10px;
           background:#ccc;
         }
         &::-webkit-scrollbar-thumb{
@@ -252,6 +281,9 @@ html,body {
           border-bottom:1px solid #ccc;
           background: #fff;
           box-shadow: 1px 1px 5px #ccc;
+          &:hover{
+            background: $lightgray;
+          }
           img{
             width:3rem;
             height:3rem;
@@ -266,6 +298,8 @@ html,body {
             }
             .i-info{
               font-weight:300;
+              font-size:0.8rem;
+              color:#555;
             }
           }
           .s-timetotal{
@@ -273,10 +307,91 @@ html,body {
             font-size:0.8rem
           }
         }
+        li.active{
+          .i-name{
+            color:$prired;
+          }
+          .s-timetotal{
+            color:$prired;
+          }
+        }
       }
     }
   }
 }
+
+.songitem{
+  animation-name: animationStyle1;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-duration: 300ms * $i;
+    }
+  }
+}
+
+.chanellist{
+  animation: fadeIn ease-out 800ms;
+}
+.chanellist li{
+  opacity: 0;
+  animation-name: animationStyle2;
+  transform-origin:top center;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      animation-duration: 50ms * $i;
+      animation-delay: (100ms * $i) - 200;
+    }
+  }
+}
+
+@keyframes animationStyle1 {
+  0% {
+    opacity: 0;
+    transform: rotateY(-90deg) translate3d(0, 30px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes animationStyle2 {
+  0% {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@import './_mq.scss';
+$mq-responsive: true;
+$mq-breakpoints: (
+        mobile:  320px,
+        tablet:  740px,
+        desktop: 980px,
+        wide:    1300px,
+        desktopAd: 810px,
+        mobileLandscape: 480px
+);
+$mq-static-breakpoint: desktop;
+$mq-show-breakpoints: (mobile, mobileLandscape, tablet, desktop, wide);
+
 #player{
   @include mq($until: mobile) {
     width:100%;
@@ -351,123 +466,5 @@ html,body {
   }
   @include mq($from: desktop) {
     width:20%;
-  }
-}
-
-
-
-
-
-
-
-
-
-// style1
-//---------------------------------------
-.songitem{
-  opacity: 0;
-  animation-name: animationStyle1;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      animation-duration: 300ms * $i;
-    }
-  }
-}
-
-// style2
-//---------------------------------------
-.animation-style-2 > li {
-  opacity: 0;
-  animation-name: animationStyle2;
-  transform-origin:top center;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}) {
-      animation-duration: 300ms * $i;
-      animation-delay: (150ms * $i) - 300;
-    }
-  }
-}
-
-// style3
-//---------------------------------------
-.animation-style-3 {
-  animation: fadeIn 400ms
-}
-
-// style4
-//---------------------------------------
-.animation-style-4  >li {
-  opacity: 0;
-  animation-name: animationStyle4;
-  animation-duration: 300ms;
-  transform-origin: top right;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-  @for $i from 1 through 10 {
-    &:nth-child(#{$i}){
-      animation-delay: (150ms * $i) - 300;
-    }
-  }
-}
-
-
-//=======================================
-//  keyframes
-//=======================================
-@keyframes animationStyle1 {
-  0% {
-    opacity: 0;
-    transform: rotateY(-90deg) translate3d(0, 30px, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-}
-
-@keyframes animationStyle2 {
-  0% {
-    opacity: 0;
-    transform: rotateX(-90deg);
-  }
-  100% {
-    opacity: 1;
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes animationStyle4 {
-  0%{
-    opacity:0;
-    transform: rotate(-30deg);
-  }
-  100%{
-    opacity:1;
-    transform: rotate(0deg);
-  }
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: rotateX(-90deg) rotateY(-90deg) translate3d(-50%, 50px, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-    transform: rotateX(0deg) rotateY(0deg) translate3d(-50%, -50%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: rotateX(-90deg) rotateY(90deg) translate3d(-50%, 50px, 0);
   }
 }
