@@ -10,7 +10,7 @@ var minhtml = require('gulp-htmlmin'),
 gulp.task('minhtml', function(){
     gulp.src('src/*.html')
         .pipe(minhtml({collapseWhitespace:true}))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist'))
 });
 
 gulp.task('autoprefixer',function(){
@@ -18,17 +18,17 @@ gulp.task('autoprefixer',function(){
         .pipe(autoprefixer({
             browsers:['last 2 versions','Android>=4.0']
         }))
-        .pipe(gulp.dest('dist/sass'));
+        .pipe(gulp.dest('dist/sass'))
 });
 
 gulp.task('sass', function(){
     gulp.src('dist/sass/*.scss')
         .pipe(sass())
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('dist/css'))
 });
 
 gulp.task('mincss',function(){
-    gulp.src('dist/css/*.css')
+    gulp.src('dist/css/*')
         .pipe(mincss())
         .pipe(gulp.dest('dist/css'))
 });
