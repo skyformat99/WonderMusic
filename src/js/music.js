@@ -2,6 +2,7 @@ function GetMusic(){
     this.fmData = ['3778678','19723756','10520166','71385702','2884035','180106','21845217','120001'];
     this.init(0);
 }
+
 GetMusic.prototype = {
     init:function(fmIdx){
         this.bind();
@@ -344,6 +345,6 @@ GetMusic.prototype = {
         $ele.attr('src',$ele.attr('data-original'));
         $ele.data('loaded',true);
     }
-
 };
+
 new GetMusic();
