@@ -1,9 +1,13 @@
 # WonderMusic
-A responsive web music player with Sass&jQuery.
+A responsive web APP with jQuery.
 ## Intro
-This web music player provide a chanel list for your different flavors, 
-and you can get any song by searching in this music player.
-[Demo](http://www.joycesong.com/WonderMusic/index.html)
-## Screenshot
-![](http://www.joycesong.com/wp-content/uploads/2017/02/wm-screenshot.jpg)
+![](https://github.com/joyce-song/WonderMusic/blob/master/screenshot.jpg)
+[Demo](http://www.joycesong.com/WonderMusic)
+This web music player is designed to be responsive, you can use it in browser of any kind of devices. The UI is pretty and the interaction is friendly. It can show the cover of Album and synchronous rolling lyric, I placed eight playlists of different flavors in it for your order, and you can also get any song by searching in it. In a word, everything you need in a music player is here.
 
+The front-end part is mainly built by jQuery,Sass and Gulp, by using the AJAX to get the resources from my server. by using the HTML5 audio API to I also add some CSS3 animation for the transition experience.
+
+The back-end part is built by PHP, all these efforts on the back-end part is in order to a unified JSON format and AJAX port. In order to improve the experience, the CORS is also supported.
+Now I release the API out, welcome you communicate with me.
+
+Interest is the source of power for me to work it out. If you have interest on it, please contact me, but please star it or follow me first, haha, It’s not a AD.
