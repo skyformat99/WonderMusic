@@ -4,6 +4,7 @@ var minhtml = require('gulp-htmlmin'),
     mincss = require('gulp-clean-css'),
     minimage = require('gulp-imagemin'),
     uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
     autoprefixer = require('gulp-autoprefixer'),
     sass = require('gulp-sass');
 
@@ -13,23 +14,19 @@ gulp.task('minhtml', function(){
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('autoprefixer',function(){
-    gulp.src('src/sass/style.scss')
-        .pipe(autoprefixer({
-            browsers:['last 2 versions','Android>=4.0']
-        }))
-        .pipe(gulp.dest('dist/sass'))
-});
-
 gulp.task('sass', function(){
-    gulp.src('dist/sass/*.scss')
+    gulp.src('src/sass/*.scss')
         .pipe(sass())
-        .pipe(gulp.dest('dist/css'))
+        .pipe(mincss())
+        .pipe(gulp.dest('src/css'))
 });
 
-gulp.task('mincss',function(){
-    gulp.src('dist/css/style.css')
-        .pipe(mincss({compatibility: 'ie8'}))
+gulp.task('autoprefixer',['sass'],function(){
+    gulp.src('src/css/*.css')
+        .pipe(concat('style.css'))
+        .pipe(autoprefixer({
+            browsers:['last 2 versions','Android>=4.0','> 5% in CN','> 0.1%',"ie 6-8","Firefox < 20"]
+        }))
         .pipe(gulp.dest('dist/css'))
 });
 
@@ -46,7 +43,7 @@ gulp.task('uglify',function(){
 });
 
 gulp.task('watch', function (){
-    gulp.watch('src/**/*',['minhtml','autoprefixer','sass','mincss','minimage','uglify']);
+    gulp.watch('src/**/*',['minhtml','autoprefixer','minimage','uglify']);
 });
 
-gulp.task('default', ['minhtml','autoprefixer','sass','mincss','minimage','uglify','watch']);
+gulp.task('default', ['minhtml','autoprefixer','minimage','uglify','watch']);

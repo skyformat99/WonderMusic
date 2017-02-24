@@ -9,11 +9,10 @@ GetMusic.prototype = {
     },
     bind:function(){
         var _this = this;
-        var playlistShow = true;
         var playRandom = false;
-        var chanelListShow = false;
         var clock;
         this.player = document.querySelector('audio');
+
         this.player.ontimeupdate = function(){
             _this.timenow = _this.secondsToTime(_this.player.currentTime);
             $('.timenow').text(_this.timenow);
@@ -21,7 +20,6 @@ GetMusic.prototype = {
                 moveValue = barwidth*(_this.player.currentTime/_this.player.duration);
             $('.pointnow').css('left',moveValue-8);
             $('.pasttime').css('width',moveValue);
-
             for(var i=0;i<_this.lyric.length;i++){
                 var curT = $('.lyriclist li').eq(i).attr('dataTime');
                 if (_this.player.currentTime >= curT) {
@@ -34,20 +32,17 @@ GetMusic.prototype = {
                 }
             }
         };
-        this.player.oncanplay = function(){
-            _this.totaltime = _this.secondsToTime(_this.player.duration);
-            $('.timetotal').text(_this.totaltime);
-        };
+
         this.player.onended = function() {
             _this.playSong(_this.idx+1);
         };
+
         $('.play').on('click',function(){
             if(_this.player.paused){
-                _this.player.play();
-                $('.play').html('<i class="fa fa-pause-circle fa-4x">');
+                _this.startPlay();
             }else{
-                _this.player.pause();
-                $('.play').html('<i class="fa fa-play-circle fa-4x">');
+                _this.stopPlay();
+
             }
         });
         $('.backward').on('click',function(){
@@ -57,23 +52,19 @@ GetMusic.prototype = {
                 if(playRandom){
                     _this.playSong(_this.randomArray[_this.idx-1]);
                 }else{
-                    if(_this.player.paused){
-                        $('.play').html('<i class="fa fa-pause-circle fa-4x">');
-                    }
                     _this.playSong(_this.idx-1);
                 }
             }
         });
+
         $('.forward').on('click',function(){
             if(playRandom){
                 _this.playSong(_this.randomArray[_this.idx+1]);
             }else{
-                if(_this.player.paused){
-                    $('.play').html('<i class="fa fa-pause-circle fa-4x">');
-                }
                 _this.playSong(_this.idx+1);
             }
         });
+
         $('.volume').on('click',function(){
             if(_this.player.volume===0){
                 _this.player.volume = 1;
@@ -83,15 +74,19 @@ GetMusic.prototype = {
                 $('.volume').html('<i class="fa fa-volume-off"></i>');
             }
         });
+
         $('.list').on('click',function(){
-            if(!playlistShow){
-                $('#playlist').show();
-                playlistShow = true;
+            if($('#playlist').css('visibility')=='hidden'){
+                $('#playlist').css({'visibility':'visible'});
             }else{
-                $('#playlist').hide();
-                playlistShow = false;
+                $('#playlist').css({'visibility':'hidden'});
             }
         });
+
+        $('.backtoplayer').on('click',function(){
+            $('#playlist').css({'visibility':'hidden'});
+        });
+
         $('.oneloop').on('click',function(){
             if(!_this.player.loop){
                 _this.player.loop = true;
@@ -101,6 +96,7 @@ GetMusic.prototype = {
                 $('.ctrlbtnlist li').eq(0).removeClass('active');
             }
         });
+
         $('.random').on('click',function(){
             if(!playRandom){
                 $('.ctrlbtnlist li').eq(4).addClass('active');
@@ -122,31 +118,28 @@ GetMusic.prototype = {
                 };
             }
         });
+
         $('.progressbar').on('click',function(e){
             var dis = e.clientX-$(this).offset().left;
             _this.moveTo(dis);
         });
+
         $('.songlist').on('click','.songitem',function(){
             _this.playSong($(this).index());
         });
+
         $('.search').on('keyup',function(e){
             if(e.keyCode == 13){
                 _this.searchSong();
+                $('#sq').val('');
             }
         });
-        $('.fa-th-large').on('click',function(){
-            if(!chanelListShow){
-                $('.chanellist').css('display','block');
-                chanelListShow = true;
-            }else{
-                $('.chanellist').css('display','none');
-                chanelListShow = false;
-            }
-        });
+
         $('.chanellist li').on('click',function(){
             _this.getList(_this.fmData[$(this).index()]);
             $('.songlist').scrollTop(0);
         });
+
         $('.songlist').on('scroll',function(){
             if(clock){
                 clearTimeout(clock);
@@ -182,6 +175,7 @@ GetMusic.prototype = {
             }
         }).done(function($url){
             $('audio').attr('src',$url.data[0].url);
+            _this.startPlay();
         });
     },
     getLyric:function(idx){
@@ -223,8 +217,21 @@ GetMusic.prototype = {
         this.setImg(idx);
         this.setInfo(idx);
         this.idx = idx;
+        $('.timetotal').text(this.totalTimeArray[idx]);
         $('.songlist li').removeClass('active');
         $('.songlist li').eq(idx).addClass('active');
+    },
+    startPlay:function(){
+        this.player.play();
+        if(!this.player.paused){
+            $('.play').html('<i class="fa fa-pause-circle fa-4x">');
+        }
+    },
+    stopPlay:function(){
+        this.player.pause();
+        if(this.player.paused){
+            $('.play').html('<i class="fa fa-play-circle fa-4x">');
+        }
     },
     setInfo:function(idx){
         var song = this.songArray[idx];
@@ -245,12 +252,14 @@ GetMusic.prototype = {
         this.singerArray = [];
         this.albumArray = [];
         this.coverArray = [];
+        this.totalTimeArray = [];
         for(var i=0;i<songs.length;i++){
             this.songArray.push(songs[i].name);
             this.idArray.push(songs[i].id);
             this.singerArray.push(songs[i].ar[0].name);
             this.albumArray.push(songs[i].name);
             this.coverArray.push(songs[i].al.picUrl);
+            this.totalTimeArray.push(this.msToTime(songs[i].dt));
             items += '<li class="songitem">';
             items += '<img class="lazy" src="img/blank.png" data-original="'+songs[i].al.picUrl+'">';
             items += '<div class="intro-ct"><p class="i-name">'+songs[i].name+'</p>';

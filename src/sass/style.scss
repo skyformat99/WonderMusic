@@ -4,7 +4,7 @@ $lightgray:#E5E2E2;
 $lightbrown:#4A473C;
 $prired:#E0443B;
 $orange:#F9774E;
-
+@import "./responsive.scss";
 *{
   margin:0;
   padding:0;
@@ -19,6 +19,8 @@ html,body {
   font-family:$fontStack;
   font-size:16px;
   user-select:none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
 }
 #container{
   width:100%;
@@ -63,7 +65,7 @@ html,body {
                 height:30px;
                 line-height:30px;
                 text-align: center;
-                color:#555;
+                color:#aaa;
                 font-size:0.8rem;
               }
               li.active{
@@ -108,8 +110,8 @@ html,body {
           flex-direction:column;
           text-align: center;
           cursor:pointer;
+          transition:all 0.3s;
           &:hover{
-            transition:all 0.3s;
             color:$prired;
           }
           &:nth-child(1),&:nth-child(5){color: $gray;}
@@ -129,6 +131,9 @@ html,body {
           .s-name{
             margin:0 2rem;
             font-size:1.8rem;
+            text-overflow:clip;
+            max-height:6rem;
+            overflow:hidden;
           }
           .s-singer{
             font-size:0.9rem;
@@ -177,8 +182,10 @@ html,body {
   #playlist{
     height:100%;
     background: #F1F3F8;
+    overflow: hidden;
     .playheader{
-      height:10%;
+      height:70px;
+      line-height:70px;
       background: $prired;
       padding:2rem;
       display:flex;
@@ -186,46 +193,59 @@ html,body {
       justify-content: space-between;
       color:#fff;
       font-size:1.5rem;
+      .backtoplayer{
+        margin-right:2rem;
+        cursor:pointer;
+      }
       .chanel{
         position:relative;
+        display:inline-block;
+        span{
+          display:none;
+          .chanellist{
+            position:absolute;
+            left:-2rem;
+            top:70px;
+            width:200px;
+            overflow:hidden;
+            z-index:99;
+            background:#fff;
+            box-shadow:1px 1px 5px #ccc;
+            li{
+              color:#333;
+              height:40px;
+              line-height:40px;
+              font-size:1rem;
+              border:1px solid #ccc;
+              border-top:none;
+              padding:0 1rem;
+              overflow:hidden;
+              background:#fff;
+              cursor:pointer;
+              z-index:99;
+
+              &:hover{
+                background:$lightgray;
+              }
+            }
+          }
+        }
+        &:hover{
+          span{
+            display:block;
+          }
+        }
         i{
           cursor:pointer;
           &:hover{
             color:$lightgray;
           }
         }
-        .chanellist{
-          position:absolute;
-          left:-2rem;
-          top:3rem;
-          width:200px;
-          overflow:hidden;
-          display:none;
-          z-index:99;
-          background:#fff;
-          box-shadow:1px 1px 5px #ccc;
-          li{
-            color:#333;
-            height:40px;
-            line-height:40px;
-            font-size:1rem;
-            border:1px solid #ccc;
-            border-top:none;
-            padding:0 1rem;
-            overflow:hidden;
-            background:#fff;
-            cursor:pointer;
-            z-index:99;
 
-            &:hover{
-              background:$lightgray;
-            }
-          }
-        }
       }
       .search{
-        height:1.8rem;
-        line-height:1.9rem;
+        height:30px;
+        line-height:30px;
         border-radius:1rem;
         border:2px solid darken($prired,15%);
         position:relative;
@@ -235,20 +255,13 @@ html,body {
           left:0.5rem;
           top:0.45rem;
         }
-        label{
-          position:absolute;
-          font-size:0.8rem;
-          left:1.5rem;
-          top:-1px;
-          color:#eee;
-        }
         input{
           position:absolute;
           left:1.5rem;
           margin-left:-2rem;
           top:-1px;
-          height:1.8rem;
-          line-height:1.8rem;
+          height:30px;
+          line-height:30px;
           text-indent:2rem;
           width:100%;
           background:transparent;
@@ -263,7 +276,7 @@ html,body {
 
     }
     .songlist-ct{
-      height:90%;
+        height:100%;
       .songlist{
         height:100%;
         overflow-x:hidden;
@@ -289,7 +302,6 @@ html,body {
           }
           img{
             width:3rem;
-            height:3rem;
           }
           .intro-ct{
             width:100%;
@@ -382,92 +394,18 @@ html,body {
   }
 }
 
-@import './_mq.scss';
-$mq-responsive: true;
-$mq-breakpoints: (
-        mobile:  320px,
-        tablet:  740px,
-        desktop: 980px,
-        wide:    1300px,
-        desktopAd: 810px,
-        mobileLandscape: 480px
-);
-$mq-static-breakpoint: desktop;
-$mq-show-breakpoints: (mobile, mobileLandscape, tablet, desktop, wide);
 
-#player{
-  @include mq($until: mobile) {
-    width:100%;
-  }
-  @include mq($from: mobile,$until: mobileLandscape) {
-    width:100%;
-  }
-  @include mq($from: mobileLandscape,$until: tablet) {
-    width:80%;
-    border:1px solid #ccc;
-  }
-  @include mq($from: tablet,$until: desktop) {
-    width:45%;
-  }
-  @include mq($from: desktop) {
-    width:35%;
-  }
+.github-corner:hover .octo-arm{
+  animation:octocat-wave 560ms ease-in-out
 }
-#playlist{
-  @include mq($until: mobile) {
-    display:none;
-  }
-  @include mq($from: mobile,$until: mobileLandscape) {
-    display:none;
-  }
-  @include mq($from: mobileLandscape,$until: tablet) {
-    width:20%;
-    display:block;
-  }
-  @include mq($from: tablet,$until: desktop) {
-    width:55%;
-    display:block;
-  }
-  @include mq($from: desktop) {
-    width:65%;
-    display:block;
-  }
-}
-.songitem{
-  @include mq($until: mobile) {
-    margin:0;
-  }
-  @include mq($from: mobile,$until: mobileLandscape) {
-    margin:0;
-  }
-  @include mq($from: mobileLandscape,$until: tablet) {
-    margin:0;
-  }
-  @include mq($from: tablet,$until: desktop) {
-    margin:1rem;
-  }
-  @include mq($from: desktop) {
-    margin:1rem;
-  }
-}
-.intro-ct{
-  @include mq($from: mobileLandscape,$until: tablet) {
-    display:none;
-  }
-}
-.s-timetotal{
-  @include mq($from: mobileLandscape,$until: tablet) {
-    display:none;
-  }
-}
-.search{
-  @include mq($from: mobileLandscape,$until: tablet) {
-    display:none;
-  }
-  @include mq($from: tablet,$until: desktop) {
-    width:50%;
-  }
-  @include mq($from: desktop) {
-    width:20%;
-  }
-}
+@keyframes octocat-wave{
+   0%,100%{
+     transform:rotate(0)
+   }
+   20%,60%{
+     transform:rotate(-25deg)
+   }
+   40%,80%{
+     transform:rotate(10deg)
+   }
+ }
