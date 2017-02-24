@@ -5,8 +5,9 @@ var minhtml = require('gulp-htmlmin'),
     minimage = require('gulp-imagemin'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-    autoprefixer = require('gulp-autoprefixer'),
-    sass = require('gulp-sass');
+    sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer');
+
 
 gulp.task('minhtml', function(){
     gulp.src('src/*.html')
