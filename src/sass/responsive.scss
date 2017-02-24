@@ -59,11 +59,11 @@ $mq-show-breakpoints: (mobile, mobileLandscape, tablet, desktop, wide);
   }
   @include mq($from: tablet,$until: desktop) {
     width:55%;
-    display:block!important;
+    visibility:visible!important;
   }
   @include mq($from: desktop) {
     width:65%;
-    display:block!important;
+    visibility:visible!important;
   }
 }
 
