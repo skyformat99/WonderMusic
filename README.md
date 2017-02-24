@@ -4,7 +4,7 @@ A responsive web APP with jQuery&Sass&Gulp.
 
 This web music player is designed to be responsive, you can use it in browser of any kind of devices. The UI is pretty and the interaction is friendly. It can show the cover of Album and synchronous rolling lyric, I placed eight playlists of different flavors in it for your order, and you can also get any song by searching in it. In a word, everything you need in a music player is here.
 
-[DEMO](http://www.joycesong.com/WonderMusic)
+[DEMO](http://www.joycesong.com/WonderMusic/index.html)
 
 ![](https://github.com/joyce-song/WonderMusic/blob/master/screenshot.jpg)
 
