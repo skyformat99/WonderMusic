@@ -189,12 +189,14 @@ GetMusic.prototype = {
                 songid:_this.idArray[idx]
             }
         }).done(function($lyric){
-            if($lyric.nolyric){
+            if($lyric.nolyric || $lyric.uncollected){
                 $('.lyriclist').text('该歌曲无歌词');
             }else{
                 $('.lyriclist').text('');
                 _this.renderLyric($lyric.lrc.lyric);
             }
+        }).fail(function(){
+            $('.lyriclist').text('该歌曲无歌词');
         });
     },
     searchSong:function(){
